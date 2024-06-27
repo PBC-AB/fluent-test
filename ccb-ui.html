@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>pocCCB</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="container">
+      <h1>Button (Custom)</h1>
+      <div class="input_container">
+        <div class="label_container">
+          <label >Title (Button Text)</label>
+          <div class="tooltip">?
+            <span class="tooltiptext">This text will appear on the button</span>
+          </div>
+        </div>
+        <input class="buttonTitle__input" type="text" placeholder="Button Title"></input>
+      </div>
+      <div class="input_container">
+        <div class="label_container">
+          <label>Link</label>
+          <div class="tooltip">?
+            <span class="tooltiptext">Will redirect to the link url when button is clicked</span>
+          </div>
+        </div>
+        <input class="buttonLink__input" type="text"  placeholder="Button Link"></input>
+      </div>
+      <div class="input_container">
+        <div class="label_container">
+          <label >Alias (UTM-Parameter)</label>
+          <div class="tooltip">?
+            <span class="tooltiptext">Will appear in utm_content</span>
+          </div>
+        </div>
+        <input class="buttonAlias__input" type="text" placeholder="UTM-Parameter"></input>
+      </div>
+      <div class="input_container">
+        <!-- Drop down -->
+        <label >Position</label>
+        <select class="buttonPosition__select" name="buttonPosition__select" id="buttonPosition_select"></select>
+      </div>
+      <div class="input_container">
+        <!-- Drop down -->
+        <label >Style</label>
+        <select class="buttonStyle__select" name="buttonStyle__select" id="buttonStyle__select"></select>
+      </div>
+
+      <div class="input_container_two_column">
+        <div class="input_container">
+          <!-- Drop down -->
+          <label >Top-Margin (px)</label>
+          <select class="topMargin__select" name="topMargin__select" id="topMargin__select"></select>
+        </div>
+        <div class="input_container">
+          <!-- Drop down -->
+          <label >Bottom-Margin (px)</label>
+          <select class="bottomMargin__select" name="bottomMargin__select" id="bottomMargin__select"></select>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

@@ -15,7 +15,6 @@ async function initialize(){
   let webAppClientId;
   let authEndpoint;
 
-  let responseClone;
   try {
     const response = await fetch('/credentials');
     const credentials = await response.json();

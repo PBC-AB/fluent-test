@@ -18,7 +18,7 @@ async function initialize(){
   let responseClone;
   try {
     const response = await fetch('/credentials');
-    responseClone = response.clone();
+    responseClone = await response.clone();
     const credentials = await response.json();
 
     webAppClientId = credentials.webAppClientId;
@@ -27,6 +27,7 @@ async function initialize(){
     //console.log('credentials', credentials);
   } catch(e){
     console.log(responseClone.text());
+    console.log(e);
     displayUnauthorized('No credentials.');
     return;
   }

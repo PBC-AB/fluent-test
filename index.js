@@ -3,18 +3,22 @@ import express from 'express';
 
 let app = express();
 app.use(express.json()); // establish middleware
+app.use(express.static('.')); // serve static files from the current directory
 
-
-const PORT = process.env.PORT || 8080; // Use 8080 as a fallback if PORT is not set
+const PORT = env.PORT || 8080; // Use 8080 as a fallback if PORT is not set
 
 //const thisAppURL = process.env.APP_URL_BUTTON
-const authEndpoint = process.env.AUTH_ENDPOINT_BUTTON
-const restEndpoint = process.env.REST_ENDPOINT_BUTTON
-const webAppClientId = process.env.WEBAPP_CLIENTID_BUTTON
-const webAppClientSecret = process.env.WEBAPPCLIENT_SECRET_BUTTON
+const authEndpoint = env.AUTH_ENDPOINT_BUTTON
+const restEndpoint = env.REST_ENDPOINT_BUTTON
+const webAppClientId = env.WEBAPP_CLIENTID_BUTTON
+const webAppClientSecret = env.WEBAPPCLIENT_SECRET_BUTTON
 
 const authURL = authEndpoint + "v2/token"
 
+//initial access
+app.get('/', (req, res) => {
+    res.sendFile('index.html', { root: '.' });
+});
 
 app.get('/load-ui', (req, res) => {
     res.sendFile('ccb-ui.html', { root: '.' });
@@ -80,19 +84,12 @@ function authAPICall(authCode, thisAppURL) {
 }
 
 app.get('/credentials', (req, res) => {
-    console.log("authEndpoint: " + authEndpoint)
     res.status(200).json({
-        webAppClientId : webAppClientId,
-        authEndpoint : authEndpoint
+        webAppClientId,
+        authEndpoint
     });
 });
 
-app.use(express.static('.')); // serve static files from the current directory
-
-//initial access
-app.get('/', (req, res) => {
-    res.sendFile('index.html', { root: '.' });
-});
 
 app.listen(PORT, async () => { 
     console.log(`App started on Port ${PORT}`);

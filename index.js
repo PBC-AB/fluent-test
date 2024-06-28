@@ -80,6 +80,7 @@ function authAPICall(authCode, thisAppURL) {
 }
 
 app.get('/credentials', (req, res) => {
+    console.log("authEndpoint: " + authEndpoint)
     res.status(200).json({
         webAppClientId : webAppClientId,
         authEndpoint : authEndpoint

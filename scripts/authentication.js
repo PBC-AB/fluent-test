@@ -19,7 +19,7 @@ async function initialize(){
   try {
     const response = await fetch('/credentials');
     responseClone = response.clone();
-    const credentials = await responseClone.json();
+    const credentials = await response.json();
 
     webAppClientId = credentials.webAppClientId;
     authEndpoint = credentials.authEndpoint;

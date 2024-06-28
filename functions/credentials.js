@@ -1,6 +1,6 @@
 export function onRequest(context) {
-    return new Response({
+    return new Response(json({
         webAppClientId: 'Test funcion 1',
         authEndpoint : 'Test function 2'
-    })
+    }))
 }

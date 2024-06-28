@@ -24,6 +24,7 @@ async function initialize(){
 
     //console.log('credentials', credentials);
   } catch(e){
+    console.log(e);
     displayUnauthorized('No credentials.');
     return;
   }

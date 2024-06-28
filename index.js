@@ -3,7 +3,7 @@ import express from 'express';
 
 let app = express();
 app.use(express.json()); // establish middleware
-app.use(express.static('.')); // serve static files from the current directory
+
 
 const PORT = process.env.PORT || 8080; // Use 8080 as a fallback if PORT is not set
 
@@ -15,10 +15,6 @@ const webAppClientSecret = process.env.WEBAPPCLIENT_SECRET_BUTTON
 
 const authURL = authEndpoint + "v2/token"
 
-//initial access
-app.get('/', (req, res) => {
-    res.sendFile('index.html', { root: '.' });
-});
 
 app.get('/load-ui', (req, res) => {
     res.sendFile('ccb-ui.html', { root: '.' });
@@ -90,6 +86,12 @@ app.get('/credentials', (req, res) => {
     });
 });
 
+app.use(express.static('.')); // serve static files from the current directory
+
+//initial access
+app.get('/', (req, res) => {
+    res.sendFile('index.html', { root: '.' });
+});
 
 app.listen(PORT, async () => { 
     console.log(`App started on Port ${PORT}`);

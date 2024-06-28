@@ -5,13 +5,13 @@ let app = express();
 app.use(express.json()); // establish middleware
 app.use(express.static('.')); // serve static files from the current directory
 
-const PORT = env.PORT || 8080; // Use 8080 as a fallback if PORT is not set
+const PORT = process.env.PORT || 8080; // Use 8080 as a fallback if PORT is not set
 
 //const thisAppURL = process.env.APP_URL_BUTTON
-const authEndpoint = env.AUTH_ENDPOINT_BUTTON
-const restEndpoint = env.REST_ENDPOINT_BUTTON
-const webAppClientId = env.WEBAPP_CLIENTID_BUTTON
-const webAppClientSecret = env.WEBAPPCLIENT_SECRET_BUTTON
+const authEndpoint = process.env.AUTH_ENDPOINT_BUTTON
+const restEndpoint = process.env.REST_ENDPOINT_BUTTON
+const webAppClientId = process.env.WEBAPP_CLIENTID_BUTTON
+const webAppClientSecret = process.env.WEBAPPCLIENT_SECRET_BUTTON
 
 const authURL = authEndpoint + "v2/token"
 
@@ -85,8 +85,8 @@ function authAPICall(authCode, thisAppURL) {
 
 app.get('/credentials', (req, res) => {
     res.status(200).json({
-        webAppClientId,
-        authEndpoint
+        webAppClientId : webAppClientId,
+        authEndpoint : authEndpoint
     });
 });
 

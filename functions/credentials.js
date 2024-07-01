@@ -1,5 +1,4 @@
-export default {
-    async fetch(request, env, ctx){
-        return new Response(`Environment variable value: ${env.AUTH_ENDPOINT_BUTTON}`)
-    }
+export function onRequest(context){
+    const envVar = context.env.AUTH_ENDPOINT_BUTTON;
+    return new Response(`Environment variable value: ${envVar}`);
 }

@@ -5,18 +5,18 @@ export async function onRequest(context){;
 
     if(request.method === 'POST'){
         
-        let refererURL = request.headers.referer;
+        let refererURL = request.headers.get('referer');
         if( refererURL == validURL){
 
             const envVar = context.env.AUTH_ENDPOINT_BUTTON;
 
             const responseMessage = `Env: ${envVar}`
             return new Response(responseMessage, {
-                headers: {'Content-Type' : 'application/json'},
+                headers: {'Content-Type' : 'text/plain'},
             });
         }
 
-        return new Response('URL not allowed:' + data, {status: 405});
+        return new Response('URL not allowed:' + refererURL, {status: 405});
  
     }
 

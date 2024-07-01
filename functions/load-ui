@@ -1,12 +1,20 @@
-export async function onRequest(context){;
+export async function onRequest(context) {
+    const { request } = context;
+    const url = new URL(request.url);
 
-    const file = await fetch('/ccb-ui');
-    if (file.ok){
-        return new Response( file.body, {
-            headers: {'Content-Type' : 'text/html;charset=UTF-8'}
-        })
+    // Check if the request is for the root URL or index.html
+    if (url.pathname === '/' || url.pathname === '/index.html') {
+        // Modify the URL to point to index2.html
+        url.pathname = '/ccb-ui.html';
     }
 
+    // Fetch the modified URL
+    const response = await fetch(url.toString());
 
-    return new Response('Method not allowed', {status: 405});
+    // Return the response
+    return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers
+    });
 }

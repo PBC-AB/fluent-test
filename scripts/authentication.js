@@ -106,6 +106,7 @@ async function initialize(){
         }
       }).then(mid => {
         // AUTH IS OK -> LOAD UI
+        console.log('mid', mid)
         load_ui();
 
         // DO SOMETHING WITH MID

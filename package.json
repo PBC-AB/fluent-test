@@ -16,6 +16,7 @@
     "ejs": "^3.1.10",
     "express": "^4.16.3",
     "fs": "^0.0.1-security",
+    "itty-router": "^5.0.17",
     "node-localstorage": "^3.0.5",
     "xml2js": "^0.6.2"
   },

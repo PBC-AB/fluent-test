@@ -1,96 +1,13 @@
-console.log('index.js start');
-import express from 'express';
+import { Router } from 'itty-router'
 
-let app = express();
-app.use(express.json()); // establish middleware
-app.use(express.static('.')); // serve static files from the current directory
+const router = Router();
 
-const PORT = env.PORT || 8080; // Use 8080 as a fallback if PORT is not set
+const authEndpoint = env.AUTH_ENDPOINT_BUTTON || process.env.AUTH_ENDPOINT_BUTTON
 
-//const thisAppURL = process.env.APP_URL_BUTTON
-const authEndpoint = env.AUTH_ENDPOINT_BUTTON
-const restEndpoint = env.REST_ENDPOINT_BUTTON
-const webAppClientId = env.WEBAPP_CLIENTID_BUTTON
-const webAppClientSecret = env.WEBAPPCLIENT_SECRET_BUTTON
-
-const authURL = authEndpoint + "v2/token"
-
-//initial access
-app.get('/', (req, res) => {
-    res.sendFile('index.html', { root: '.' });
+router.get('/credentials', () => {
+    return new Response('test: ' + authEndpoint, {status: 200})
 });
 
-app.get('/load-ui', (req, res) => {
-    res.sendFile('ccb-ui.html', { root: '.' });
-});
-
-// 2nd access
-app.post('/submit-authCode', (req, res) => {
-    const { authCode, thisAppURL } = req.body;
-
-    // Get AccountID
-    authAPICall(authCode, thisAppURL)
-        .then(accountId => {
-            // console.log('accountId:', accountId);
-            // Send a POST request to /authed with the accountId
-            res.status(200).json({ accountId });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            res.status(500).json({ error: error.message });
-        });
-});
-
-function authAPICall(authCode, thisAppURL) {
-
-    let payload = {
-      "grant_type": "authorization_code"
-      ,"code": authCode
-      ,"client_id": webAppClientId
-      ,"client_secret":webAppClientSecret
-      ,"redirect_uri": thisAppURL
-    }
-   
-    return fetch(authURL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-    .then(response => response.json())
-    .then(data => {
-       // Handle the response from the backend
-        console.log(data);
-        var accessToken = data.access_token
-        console.log(accessToken)
-        var restUrl = restEndpoint + "platform/v1/tokenContext";
-        console.log(restUrl)
-        return fetch(restUrl, {
-            headers: {
-                'Authorization': 'Bearer ' + accessToken
-            }
-        });
-    })
-    .then(response => response.json())
-    .then(data => {
-        var accountId = data.organization.id;
-        //console.log('accountId:', accountId);      
-        return accountId; // Return the accountId
-    })
-    .catch(error => {
-      throw new Error('Error making API call');
-    });
-}
-
-app.get('/credentials', (req, res) => {
-    res.status(200).json({
-        webAppClientId,
-        authEndpoint
-    });
-});
-
-
-app.listen(PORT, async () => { 
-    console.log(`App started on Port ${PORT}`);
+addEventListener('fetch', (event) => {
+    event.respondWith(router.handle(event.request))
 });

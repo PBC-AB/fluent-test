@@ -30,7 +30,8 @@ async function initialize(){
   }
   
   // This script should only run on main frame
-  if (window.location.href == thisAppURL && /content-builder\..*\.marketingcloudapps.com/.test(document.location.ancestorOrigins[0])){
+  //if (window.location.href == thisAppURL && /content-builder\..*\.marketingcloudapps.com/.test(document.location.ancestorOrigins[0])){
+  if (window.location.href == thisAppURL){
 
     //console.log(window.location.href)
     sdk.triggerAuth2({authURL: authEndpoint, clientId: webAppClientId, redirectURL: thisAppURL});

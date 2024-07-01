@@ -43,6 +43,7 @@ async function initialize(){
     sdk.triggerAuth2({authURL: authEndpoint, clientId: webAppClientId, redirectURL: thisAppURL});
 
     return;
+
     // Wait for iframe + widget itself to load before progressing
     // Identifies and gets the authcode from the iframe url created by sdk.triggerAuth2
     let authframe = document.querySelector(".authframe");

@@ -23,7 +23,6 @@ async function initialize(){
     webAppClientId = credentials.webAppClientId;
     authEndpoint = credentials.authEndpoint;
 
-    return;
   } catch(e){
     console.log(e);
     displayUnauthorized('No credentials.');

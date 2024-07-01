@@ -6,7 +6,7 @@ async function initialize(){
 
         const credentials = await response.text();
     
-        console.log('credentials', JSON.stringify(credentials, null, 2));
+        console.log(JSON.stringify(credentials, null, 2));
         return;
       } catch(e){
         console.log(e);

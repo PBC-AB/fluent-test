@@ -91,7 +91,12 @@ async function initialize(){
       fetch('/submit-auth', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ authCode: authCode, thisAppURL : thisAppURL, webAppClientId : webAppClientId, webAppClientSecret : webAppClientSecret })
+        body: JSON.stringify({ authCode: authCode, 
+          thisAppURL : thisAppURL, 
+          webAppClientId : webAppClientId, 
+          webAppClientSecret : webAppClientSecret, 
+          authEndpoint : authEndpoint,
+          restEndpoint : restEndpoint })
       })
       .then(response => {
         if (response.ok) {

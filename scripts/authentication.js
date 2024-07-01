@@ -104,10 +104,10 @@ async function initialize(){
         } else {
             throw new Error('Error: ' + response.status + ' - ' + response.statusText);
         }
-      }).then(mid => {
+      }).then( async mid => {
         // AUTH IS OK -> LOAD UI
         console.log('mid', mid)
-        load_ui();
+        await fetch('/load-ui');
 
         // DO SOMETHING WITH MID
       })

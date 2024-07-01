@@ -22,7 +22,7 @@ async function initialize(){
     //webAppClientId = credentials.webAppClientId;
     //authEndpoint = credentials.authEndpoint;
 
-    console.log('credentials', JSON.stringify(credentials, null, 2));
+    console.log('credentials',credentials);
     return;
   } catch(e){
     console.log(e);

@@ -21,7 +21,7 @@ export async function onRequest(context){;
                 webAppClientId : clientId
             };
 
-            return new Response(data, {headers: {'Content-Type' : 'application/json'}});
+            return new Response(JSON.stringify(data), {headers: {'Content-Type' : 'text/plain'}});
         }
 
         return new Response('URL not allowed:' + refererURL, {status: 405});

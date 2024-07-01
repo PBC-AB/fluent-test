@@ -17,12 +17,12 @@ async function initialize(){
 
   try {
     const response = await fetch('/credentials', {method:'POST'});
-    const credentials = await response.json();
+    const credentials = await response.text();
 
     //webAppClientId = credentials.webAppClientId;
     //authEndpoint = credentials.authEndpoint;
 
-    console.log('credentials',credentials);
+    console.log('credentials',JSON.parse(credentials));
     return;
   } catch(e){
     console.log(e);

@@ -13,7 +13,9 @@ async function initialize(){
 
   let thisAppURL = window.location.origin + '/';
   let webAppClientId;
+  let webAppClientSecret;
   let authEndpoint;
+  let restEndpoint;
 
   try {
     const response = await fetch('/credentials', {method:'POST'});
@@ -21,8 +23,10 @@ async function initialize(){
     const credentials = JSON.parse(responseText);
 
     webAppClientId = credentials.webAppClientId;
+    webAppClientSecret = credentials.webAppClientSecret;
     authEndpoint = credentials.authEndpoint;
-
+    restEndpoint = credentials.restEndpoint;
+    
   } catch(e){
     console.log(e);
     displayUnauthorized('No credentials.');
@@ -68,36 +72,38 @@ async function initialize(){
     //Terminate iframe 
     authframe.remove();
 
-    if (authCode) {
-      try {
-        // Get AccountID
-        fetch('/submit-authCode', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ authCode: authCode, thisAppURL : thisAppURL })
-        })
-        .then(response => {
-          if (response.ok) {
-              return response.text(); 
-          } else {
-              throw new Error('Error: ' + response.status + ' - ' + response.statusText);
-          }
-        }).then(mid => {
-          // AUTH IS OK -> LOAD UI
-          load_ui();
-
-          // DO SOMETHING WITH MID
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-      } catch (error) {
-        throw error; 
-      }
+    if (!authCode) {
+      displayUnauthorized("App is not running on valid environment.");
+      return;
     }
-  } else {
-    displayUnauthorized("App is not running on valid environment.");
+
+    try {
+      // Get AccountID
+      fetch('/submit-authCode', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ authCode: authCode, thisAppURL : thisAppURL, webAppClientId : webAppClientId, webAppClientSecret : webAppClientSecret })
+      })
+      .then(response => {
+        if (response.ok) {
+            return response.text(); 
+        } else {
+            throw new Error('Error: ' + response.status + ' - ' + response.statusText);
+        }
+      }).then(mid => {
+        // AUTH IS OK -> LOAD UI
+        load_ui();
+
+        // DO SOMETHING WITH MID
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    } catch (error) {
+      throw error; 
+    }
   }
+  
 }
 
 initialize();

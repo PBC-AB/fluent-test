@@ -18,6 +18,8 @@ export async function onRequest(context){;
 
             const data = {
                 authEndpoint : authUrl,
+                restEndpoint : restUrl,
+                webAppClientSecret : secretId,
                 webAppClientId : clientId
             };
 

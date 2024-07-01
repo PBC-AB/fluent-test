@@ -1,0 +1,12 @@
+export async function onRequest(context){;
+
+    const file = await fetch('/ccb-ui');
+    if (file.ok){
+        return new Response( file.body, {
+            headers: {'Content-Type' : 'text/html;charset=UTF-8'}
+        })
+    }
+
+
+    return new Response('Method not allowed', {status: 405});
+}

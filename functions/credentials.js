@@ -26,8 +26,7 @@ export async function onRequest(context){;
             return new Response(JSON.stringify(data), {headers: {'Content-Type' : 'text/plain'}});
         }
 
-        return new Response('URL not allowed:' + refererURL, {status: 405});
- 
+        return new Response('Conflict:' + refererURL, {status: 409});
     }
 
     return new Response('Method not allowed', {status: 405});

@@ -14,15 +14,21 @@ async function initialize(){
   console.log('Is being called', window.location.href)
 
   let thisAppURL = window.location.origin + '/';
+
   let webAppClientId;
   let webAppClientSecret;
   let authEndpoint;
   let restEndpoint;
 
+  if (thisAppURL != window.location.href) return;
+
   try {
     const response = await fetch('/credentials', {method:'POST'});
+    if(!response.ok) return;
     const responseText = await response.text();
     const credentials = JSON.parse(responseText);
+
+    if(!credentials) return;
 
     webAppClientId = credentials.webAppClientId;
     webAppClientSecret = credentials.webAppClientSecret;
@@ -38,12 +44,10 @@ async function initialize(){
   }
   
   // This script should only run on main frame
-  if (window.location.href == thisAppURL && /content-builder\..*\.marketingcloudapps.com/.test(document.location.ancestorOrigins[0])){
+  if (/content-builder\..*\.marketingcloudapps.com/.test(document.location.ancestorOrigins[0])){
   //if (window.location.href == thisAppURL){
 
     sdk.triggerAuth2({authURL: authEndpoint, clientId: webAppClientId, redirectURL: thisAppURL});
-
-    
 
     // Wait for iframe + widget itself to load before progressing
     // Identifies and gets the authcode from the iframe url created by sdk.triggerAuth2
@@ -62,11 +66,7 @@ async function initialize(){
       }
     }
 
-
-
     console.log(waited_milliseconds);
-
-    return;
 
     //frameURL = authframe.contentWindow.location.href;
     //console.log("frameURL", frameURL)

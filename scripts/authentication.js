@@ -17,7 +17,7 @@ async function initialize(){
 
   try {
     const response = await fetch('/credentials', {method:'POST'});
-    const credentials = await response.text();
+    const credentials = await response.json();
 
     //webAppClientId = credentials.webAppClientId;
     //authEndpoint = credentials.authEndpoint;

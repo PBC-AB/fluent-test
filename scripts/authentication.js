@@ -53,7 +53,7 @@ async function initialize(){
       }
     }
 
-    //console.log(waited_milliseconds);
+    console.log(waited_milliseconds);
 
     //frameURL = authframe.contentWindow.location.href;
     //console.log("frameURL", frameURL)
@@ -62,7 +62,7 @@ async function initialize(){
     if(frameURL && frameURL != "about:blank"){
       let url = new URL(frameURL);
       authCode = url.searchParams.get("code");
-      //console.log("Authcode", authCode);
+      console.log("Authcode", authCode);
     }
 
     //Terminate iframe 

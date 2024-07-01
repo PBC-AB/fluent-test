@@ -26,6 +26,8 @@ async function initialize(){
     webAppClientSecret = credentials.webAppClientSecret;
     authEndpoint = credentials.authEndpoint;
     restEndpoint = credentials.restEndpoint;
+
+    console.log('credentials', credentials);
     
   } catch(e){
     console.log(e);
@@ -37,9 +39,10 @@ async function initialize(){
   //if (window.location.href == thisAppURL && /content-builder\..*\.marketingcloudapps.com/.test(document.location.ancestorOrigins[0])){
   if (window.location.href == thisAppURL){
 
-    //console.log(window.location.href)
+    console.log(window.location.href)
     sdk.triggerAuth2({authURL: authEndpoint, clientId: webAppClientId, redirectURL: thisAppURL});
-  
+
+    return;
     // Wait for iframe + widget itself to load before progressing
     // Identifies and gets the authcode from the iframe url created by sdk.triggerAuth2
     let authframe = document.querySelector(".authframe");

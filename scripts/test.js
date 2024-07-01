@@ -1,12 +1,8 @@
 async function initialize(){
 
     try {
-      
-        const response = await fetch('/credentials', { 
-          method: 'POST', 
-          headers : {'Content-Type' : 'application/json'},
-          body : JSON.stringify({url : window.location.origin + '/'})
-        });
+
+        const response = await fetch('/credentials', { method: 'POST' });
 
         const credentials = await response.text();
     

@@ -88,7 +88,7 @@ async function initialize(){
 
     try {
       // Get AccountID
-      fetch('/submit-auth', {
+      await fetch('/submit-auth', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ authCode: authCode, 
@@ -99,15 +99,10 @@ async function initialize(){
           restEndpoint : restEndpoint })
       })
       .then(response => {
-        if (response.ok) {
-            return response.text(); 
-        } else {
-            throw new Error('Error: ' + response.status + ' - ' + response.statusText);
-        }
+       
       }).then( async mid => {
         // AUTH IS OK -> LOAD UI
         console.log('mid', mid)
-        await fetch('/load-ui');
 
         // DO SOMETHING WITH MID
       })
@@ -117,6 +112,23 @@ async function initialize(){
     } catch (error) {
       throw error; 
     }
+
+    try{
+      console.log('Fetch load-ui')
+      await fetch('/load-ui').then( response => {
+        if (response.ok) {
+          return response.text(); 
+        } else {
+          throw new Error('Error: ' + response.status + ' - ' + response.statusText);
+        }
+      }).then((data)=>{
+        console.log(data);
+      })
+    } catch(e){
+
+    }
+
+    
   }
   
 }

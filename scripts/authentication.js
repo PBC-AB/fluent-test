@@ -88,7 +88,7 @@ async function initialize(){
 
     try {
       // Get AccountID
-      fetch('/submit-authCode', {
+      fetch('/submit-auth', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ authCode: authCode, thisAppURL : thisAppURL, webAppClientId : webAppClientId, webAppClientSecret : webAppClientSecret })

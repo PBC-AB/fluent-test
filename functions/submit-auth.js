@@ -27,5 +27,7 @@ export async function onRequest(context){;
     } catch (e){
         console.log(e);
     }
+
+    return new Response('Method not allowed', {status: 400});
     
 }

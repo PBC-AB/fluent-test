@@ -4,18 +4,19 @@ export async function onRequest(context){;
     const validURL = "https://fluent-test.pages.dev/";
 
     if(request.method === 'POST'){
-        const data = await request.json();
+        
+        let refererURL = request.headers.referer;
+        if( refererURL == validURL){
 
-        if( data == validURL){
             const envVar = context.env.AUTH_ENDPOINT_BUTTON;
-            console.log(data)
-            const responseMessage = `Received: ${JSON.stringify(data)}, Env: ${envVar}`
+
+            const responseMessage = `Env: ${envVar}`
             return new Response(responseMessage, {
                 headers: {'Content-Type' : 'application/json'},
             });
         }
 
-        return new Response('URL not allowed', {status: 405});
+        return new Response('URL not allowed:' + data, {status: 405});
  
     }
 

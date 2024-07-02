@@ -28,18 +28,18 @@ async function initialize(){
   }
   
   const credentials = await getCredentials();
-  ({ webAppClientId, webAppClientSecret, authEndpoint, restEndpoint } = credentials);
   //console.log('credentials', credentials);
+
+  ({ webAppClientId, webAppClientSecret, authEndpoint, restEndpoint } = credentials);
 
   const authCode = await getAuthCode();
   //console.log('getAuthCode', getAuthCode);
 
   try {
-    // Retrieving account information with auth code
+
     const accountId = await getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint);
     //console.log('accountid', accountId)
 
-    //console.log('thisAppURL', thisAppURL)
     await load_ui(thisAppURL);
 
   } catch (e){
@@ -75,7 +75,9 @@ async function getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSe
     body: JSON.stringify(payload)
   }
 
-  return fetch('/submit-auth', options)
+  let mid = "";
+
+  /*return fetch('/submit-auth', options)
     .then( response => {
       if (response.ok) {
         return response.text(); 
@@ -88,7 +90,23 @@ async function getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSe
     })
     .catch(error => {
       console.error('Error:', error);
-    });
+    });*/
+
+  try { 
+    const response = await fetch('/submit-auth', options);
+    mid = response.text();
+
+    if(!mid){
+      throw 'Failed to retrieve AccountId.';
+    }
+
+  } catch(e){
+    displayUnauthorized("Failed to retrieve AccountId.");
+    throw 'Failed to retrieve AccountId.';
+  }
+
+  return mid;
+
 }
 
 async function load_ui(thisAppURL){

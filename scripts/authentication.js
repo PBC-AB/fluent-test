@@ -30,14 +30,8 @@ async function initialize(){
     const credentials = JSON.parse(responseText);*/
 
     const credentials = await getCredentials();
-    if(!credentials) return;
-
-    webAppClientId = credentials.webAppClientId;
-    webAppClientSecret = credentials.webAppClientSecret;
-    authEndpoint = credentials.authEndpoint;
-    restEndpoint = credentials.restEndpoint;
-
-    //console.log('credentials', credentials);
+    ({ webAppClientId, webAppClientSecret, authEndpoint, restEndpoint } = credentials);
+    console.log('webAppClientId', webAppClientId);
     
   } catch(e){
     console.log('No credentials', e);
@@ -91,9 +85,9 @@ async function initialize(){
   try {
     // Retrieving account information with auth code
     const accountId = await getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint);
-    console.log('accountid', accountId)
+    //console.log('accountid', accountId)
 
-    console.log('thisAppURL', thisAppURL)
+    //console.log('thisAppURL', thisAppURL)
     await load_ui(thisAppURL);
 
   } catch (e){
@@ -156,12 +150,12 @@ async function load_ui(thisAppURL){
       body: JSON.stringify(payload),
   };
 
-  console.log('payload', payload)
+  //console.log('payload', payload)
 
   try {
     const response = await fetch('/load-ui', options);
     const html = await response.text();
-    console.log('Response:', html);
+    //console.log('Response:', html);
 
     document.documentElement.innerHTML = html;
     // Script that have been pasted with innerHTML won't run.

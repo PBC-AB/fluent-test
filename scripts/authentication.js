@@ -130,7 +130,7 @@ async function getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSe
     body: JSON.stringify(payload)
   }
 
-  fetch('/submit-auth', options)
+  return fetch('/submit-auth', options)
     .then( response => {
       if (response.ok) {
         return response.text(); 
@@ -156,7 +156,7 @@ async function load_ui(thisAppURL){
     body: JSON.stringify(payload)
   }
 
-  fetch('load-ui', options)
+  return fetch('load-ui', options)
     .then(response => response.text())
     .then(html => {
       document.documentElement.innerHTML = html

@@ -22,8 +22,6 @@ export async function onRequest(context) {
         headers: response.headers
     });*/
 
-    return new Response(JSON.stringify(url), {
-        headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response("Text");
 
 }

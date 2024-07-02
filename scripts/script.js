@@ -31,7 +31,7 @@ const buttonSettings = {
         backgroundColor: "#0D0D0D",
         fontWeight: "bold",
         fontSize: "16px",
-        fontFamily : '"EconSansOSBol", "Segoe UI", Helvetica, Arial, sans-serif'
+        fontFamily : "'EconSansOSBol', 'Segoe UI', Helvetica, Arial, sans-serif"
     }
 }
 

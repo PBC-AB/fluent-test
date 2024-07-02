@@ -2,8 +2,6 @@ export async function onRequest(context){;
 
     const { request } = context;
 
-    // Change to context.env.APP_URL_BUTTON
-    // Create ENV Variable
     const validURL = context.env.APP_URL_BUTTON; 
 
     if(request.method === 'POST'){

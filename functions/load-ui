@@ -1,7 +1,7 @@
 export async function onRequest(context) {
     
     const { request } = context;
-    const url = new URL(await request.json().url);
+    /*const url = new URL(await request.url);
 
     // Check if the request is for the root URL or index.html
     if (url.pathname === '/' || url.pathname === '/index.html') {
@@ -17,5 +17,8 @@ export async function onRequest(context) {
         status: response.status,
         statusText: response.statusText,
         headers: response.headers
-    });
+    });*/
+
+    return new Response(request.url);
+
 }

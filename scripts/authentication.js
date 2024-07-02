@@ -156,10 +156,10 @@ async function load_ui(thisAppURL){
     body: JSON.stringify(payload)
   }
 
-  return fetch('load-ui', options)
+  fetch('load-ui', options)
     .then(response => response.text())
     .then(html => {
-      document.documentElement.innerHTML = html
+      /*document.documentElement.innerHTML = html
       // Script that have been pasted with innerHTML won't run.
       // This code below forces execution
       scripts.forEach(script => {
@@ -167,7 +167,7 @@ async function load_ui(thisAppURL){
         s.src = script;
         s.type = "text/javascript";
         document.querySelector('head').appendChild(s);
-      })
+      })*/
     })
     .catch(error => displayUnauthorized("Failed loading UI."));
 }

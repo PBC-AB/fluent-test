@@ -89,10 +89,10 @@ async function initialize(){
     try {
 
       const accountId = await getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint);
-      console.log(accountId)
+      console.log('accountid', accountId)
 
       let newPage = await load_ui(thisAppURL);
-      console.log(newPage)
+      console.log('newPage', newPage)
 
     } catch (e){
       throw e; 
@@ -148,7 +148,7 @@ async function getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSe
 
 async function load_ui(thisAppURL){
 
-  const payload = { url: thisAppURL }
+  const payload = { url : thisAppURL }
 
   const options = {
     method: 'POST',
@@ -156,9 +156,10 @@ async function load_ui(thisAppURL){
     body: JSON.stringify(payload)
   }
 
-  fetch('load-ui', options)
+  return fetch('load-ui', options)
     .then(response => response.text())
     .then(html => {
+      return html
       /*document.documentElement.innerHTML = html
       // Script that have been pasted with innerHTML won't run.
       // This code below forces execution

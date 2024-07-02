@@ -157,7 +157,11 @@ async function load_ui(thisAppURL){
     body: JSON.stringify(payload)
   }
 
-  return fetch('/load-ui', options)
+  const response = await fetch('/load-ui', options);
+  const data = await response.json();
+  console.log('Response:', data);
+
+  /*return fetch('/load-ui', options)
     .then(response => response.json())
     .then(html => {
       return html
@@ -169,7 +173,7 @@ async function load_ui(thisAppURL){
         s.src = script;
         s.type = "text/javascript";
         document.querySelector('head').appendChild(s);
-      })*/
+      })
     })
-    .catch(error => displayUnauthorized("Failed loading UI."));
+    .catch(error => displayUnauthorized("Failed loading UI."));*/
 }

@@ -23,35 +23,35 @@ export async function onRequest(context) {
         return new Response('Link not provided', { status: 400 });
     }
 
+    /*
     // Create a response object
     const responseData = {
         receivedLink: link,
     };
-
     // Return the response as JSON
-    return new Response(JSON.stringify(responseData), {
+     return new Response(JSON.stringify(responseData), {
         headers: { 'Content-Type': 'application/json' },
-    });
-
-    /*const url = new URL(await request.url);
-
-
-    // Check if the request is for the root URL or index.html
-    if (url.pathname === '/' || url.pathname === '/index.html') {
-        // Modify the URL to point to index2.html
-        url.pathname = '/ccb-ui.html';
-    }
+    });*/
+    
+    const url = new URL(link + '/ccb-ui.html');
+    console.log('toString URL', url.toString())
 
     // Fetch the modified URL
-    const response = await fetch(url.toString());
+    const htmlResponse = await fetch(url.toString());
+
+    // Check if the fetch was successful
+    if (!htmlResponse.ok) {
+        return new Response('Failed to fetch the URL', { status: htmlResponse.status });
+    }
+
+    // Get the HTML content as text
+    const html = await htmlResponse.text();
 
     // Return the response
-    return new Response(response.body, {
-        status: response.status,
-        statusText: response.statusText,
-        headers: response.headers
+    return new Response(html, {
+        headers: { 'Content-Type': 'text/html' },
     });
 
-    return new Response(origin); */
+    /*return new Response(origin); */
 
 }

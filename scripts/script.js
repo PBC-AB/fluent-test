@@ -1,22 +1,11 @@
-/*const buttonSettings = {
-    title : "",
-    link : "",
-    alias : "",
-    position : "",
-    style : "",
-    top : 0,
-    bottom : 0,
-    style1 : "font-family: 'EconSansOSReg',Arial, sans-serif; width:200px;height:35px;line-height:35px;text-align:center;background-color: #1F2E7A; color:white; font-weight:bold; border-radius: 32px;",
-    style2 : "font-family: Arial, sans-serif; width:200px;height:35px;line-height:35px;text-align:center;background-color: #f34747; color:white; font-weight:bold; border-radius: 30px;",
-    style3 : "width:200px;height:40px;line-height:40px;text-align:center;background-color: #329632; color:white; font-weight:bold; border-radius: 30px;"
-}*/
-
 const buttonSettings = {
     title : "",
     link : "",
     alias : "",
     position : "",
     style : "",
+    left : 0,
+    right : 0,
     top : 0,
     bottom : 0,
     style1 : {
@@ -42,6 +31,8 @@ const buttonPosition__select = document.querySelector('.buttonPosition__select')
 const buttonStyle__select = document.querySelector('.buttonStyle__select');
 const topMargin__select = document.querySelector('.topMargin__select');
 const bottomMargin__select = document.querySelector('.bottomMargin__select');
+const leftMargin__select = document.querySelector('.leftMargin__select');
+const rightMargin__select = document.querySelector('.rightMargin__select');
 
 const initSelectElements = () => {
 
@@ -49,13 +40,10 @@ const initSelectElements = () => {
         position: ['left', 'center', 'right'],
         style:['style1', 'style2'],
         topMargin:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','25','30','40'],
-        bottomMargin:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','25','30','40']
+        bottomMargin:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','25','30','40'],
+        leftMargin:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','25','30','40'],
+        rightMargin:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','25','30','40']
     }
-
-    const buttonPositon = document.querySelector('#buttonPosition_select');
-    const buttonStyle = document.querySelector('#buttonStyle__select');
-    const topMargin = document.querySelector('#topMargin__select');
-    const bottomMargin = document.querySelector('#bottomMargin__select');
 
     const assignSelectOption = (element, optionArr) => {
         optionArr.forEach(pos => {
@@ -66,21 +54,26 @@ const initSelectElements = () => {
         })
     }
 
-    assignSelectOption(buttonPositon, selectEntries.position)
-    assignSelectOption(buttonStyle, selectEntries.style)
-    assignSelectOption(topMargin, selectEntries.topMargin)
-    assignSelectOption(bottomMargin, selectEntries.bottomMargin)
+    assignSelectOption(buttonPosition__select, selectEntries.position)
+    assignSelectOption(buttonStyle__select, selectEntries.style)
+    assignSelectOption(topMargin__select, selectEntries.topMargin)
+    assignSelectOption(bottomMargin__select, selectEntries.bottomMargin)
+    assignSelectOption(leftMargin__select, selectEntries.leftMargin)
+    assignSelectOption(rightMargin__select, selectEntries.rightMargin)
 }
 
 function initButtonSettings(){
-    sdk.getData((data)=>{
-        buttonSettings.title = data.title || "Please click here";
-        buttonSettings.link = data.link || "https://www.economist.com/";
-        buttonSettings.alias = data.alias || "";
-        buttonSettings.position = data.position || "center";
-        buttonSettings.style = data.style || "style1";
-        buttonSettings.top = data.top || "40";
-        buttonSettings.bottom =  data.bottom || "40";
+    sdk.getData((data)=> {
+
+        buttonSettings.title = data.used ? data.title : "Please click here";
+        buttonSettings.link = data.used ? data.link : "https://www.economist.com/";
+        buttonSettings.alias = data.used ? data.alias : "Button1";
+        buttonSettings.position = data.used ? data.position : "center";
+        buttonSettings.style = data.used ? data.style : "style1";
+        buttonSettings.top = data.used ? data.top : "40";
+        buttonSettings.bottom =  data.used ? data.bottom : "40";
+        buttonSettings.left = data.used ? data.left : "0";
+        buttonSettings.right = data.used ? data.right : "0";
 
         // Assign values to input ui 
         buttonTitle__input.value = buttonSettings.title;
@@ -90,6 +83,8 @@ function initButtonSettings(){
         buttonStyle__select.value = buttonSettings.style;
         topMargin__select.value = buttonSettings.top;
         bottomMargin__select.value = buttonSettings.bottom;
+        leftMargin__select.value = buttonSettings.left;
+        rightMargin__select.value = buttonSettings.right;
 
         setButton();
     })
@@ -118,6 +113,8 @@ function initUiListeners(){
     changeListener(buttonStyle__select,buttonSettings,'style');
     changeListener(topMargin__select,buttonSettings,'top');
     changeListener(bottomMargin__select,buttonSettings,'bottom');
+    changeListener(leftMargin__select,buttonSettings,'left');
+    changeListener(rightMargin__select,buttonSettings,'right');
 
 }
 
@@ -132,7 +129,7 @@ function setButton(){
         <td height="${buttonSettings.top}"></td>
     </tr>
     <tr>
-        <td align="center" style="padding: 0 16px" valign="middle">
+        <td align="center" style="padding: 0 ${buttonSettings.left}px 0 ${buttonSettings.right}px" valign="middle">
             <table align="${buttonSettings.position}" bgcolor="${backgroundColor}" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:initial !important; border:2px solid ${backgroundColor}; border-radius:32px;">
                 <tr>
                     <td style="padding: 8px 16px; text-align: center;" valign="top">
@@ -150,13 +147,16 @@ function setButton(){
     `
 
     sdk.setData({
-        title : buttonSettings.title
+        used : true
+        ,title : buttonSettings.title
         ,link : buttonSettings.link
         ,alias : buttonSettings.alias
         ,position : buttonSettings.position
         ,style : buttonSettings.style
         ,top : buttonSettings.top
         ,bottom : buttonSettings.bottom
+        ,left : buttonSettings.left
+        ,right : buttonSettings.right
     })
 
     sdk.setContent(button);

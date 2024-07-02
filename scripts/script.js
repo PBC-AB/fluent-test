@@ -1,3 +1,16 @@
+/*const buttonSettings = {
+    title : "",
+    link : "",
+    alias : "",
+    position : "",
+    style : "",
+    top : 0,
+    bottom : 0,
+    style1 : "font-family: 'EconSansOSReg',Arial, sans-serif; width:200px;height:35px;line-height:35px;text-align:center;background-color: #1F2E7A; color:white; font-weight:bold; border-radius: 32px;",
+    style2 : "font-family: Arial, sans-serif; width:200px;height:35px;line-height:35px;text-align:center;background-color: #f34747; color:white; font-weight:bold; border-radius: 30px;",
+    style3 : "width:200px;height:40px;line-height:40px;text-align:center;background-color: #329632; color:white; font-weight:bold; border-radius: 30px;"
+}*/
+
 const buttonSettings = {
     title : "",
     link : "",
@@ -6,9 +19,16 @@ const buttonSettings = {
     style : "",
     top : 0,
     bottom : 0,
-    style1 : "font-family: 'EconSansOSReg',Arial, sans-serif; width:200px;height:35px;line-height:35px;text-align:center;background-color: #1F2E7A; color:white; font-weight:bold; border-radius: 30px;",
-    style2 : "font-family: Arial, sans-serif; width:200px;height:35px;line-height:35px;text-align:center;background-color: #f34747; color:white; font-weight:bold; border-radius: 30px;",
-    style3 : "width:200px;height:40px;line-height:40px;text-align:center;background-color: #329632; color:white; font-weight:bold; border-radius: 30px;"
+    style1 : {
+        fontColor : "#FFFFFF",
+        backgroundColor: "#1f2e7a",
+        fontWeight: "bold",
+    },
+    style2 : {
+        fontColor : "#FFFFFF",
+        backgroundColor: "#0D0D0D",
+        fontWeight: "bold",
+    }
 }
 
 const buttonTitle__input = document.querySelector('.buttonTitle__input');
@@ -101,7 +121,7 @@ function setButton(){
 
     //console.log('Set Button');
 
-    const button = `
+    /*const button = `
     <table border="0" cellpadding="0" cellspacing="0" style="max-width:600px;" width="100%">
         <tr><td height="${buttonSettings.top}"></td></tr>
         <tr>
@@ -113,6 +133,34 @@ function setButton(){
         </tr>
         <tr><td height="${buttonSettings.bottom}"></td></tr>
     </table>
+    `*/
+
+    ({backgroundColor, fontColor, fontWeight} = buttonSettings[buttonSettings.style]);
+
+    const button = `
+    <!-- CTA -->
+    <table border="0" cellpadding="0" cellspacing="0" style="max-width:600px;" width="100%">
+    <tr>
+        <td height="${buttonSettings.top}">
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="padding: 0 16px" valign="middle">
+            <table align="${buttonSettings.position}" bgcolor="${backgroundColor}" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:initial !important; border:2px solid ${backgroundColor}; border-radius:32px;">
+            <tr>
+                <td style="padding: 8px 16px; text-align: center;" valign="top">
+                    <b><a alias="${buttonSettings.alias}" href="${buttonSettings.link}" style="color:${fontColor};text-decoration:none;font-weight:${fontWeight};" target="_blank" title="${buttonSettings.title}">${buttonSettings.title}</a></b>
+                </td>
+            </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height="${buttonSettings.bottom}">
+        </td>
+    </tr>
+    </table>
+    <!-- //CTA -->
     `
 
     sdk.setData({

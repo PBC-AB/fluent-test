@@ -84,7 +84,7 @@ function initButtonSettings(){
 
         // Assign values to input ui 
         buttonTitle__input.value = buttonSettings.title;
-        buttonLink__input.value = ensureHttps(buttonSettings.link);
+        buttonLink__input.value = buttonSettings.link;
         buttonAlias__input.value = buttonSettings.alias;
         buttonPosition__select.value = buttonSettings.position;
         buttonStyle__select.value = buttonSettings.style;
@@ -123,22 +123,6 @@ function initUiListeners(){
 
 function setButton(){
 
-    //console.log('Set Button');
-
-    /*const button = `
-    <table border="0" cellpadding="0" cellspacing="0" style="max-width:600px;" width="100%">
-        <tr><td height="${buttonSettings.top}"></td></tr>
-        <tr>
-            <td align="${buttonSettings.position}" valign="middle">
-                <a href="${buttonSettings.link}" alias="${buttonSettings.alias}" style="text-decoration: none;" target="_blank">
-                    <div class="" valign="middle" style="${buttonSettings[buttonSettings.style]}">${buttonSettings.title}</div>
-                </a>
-            </td>
-        </tr>
-        <tr><td height="${buttonSettings.bottom}"></td></tr>
-    </table>
-    `*/
-
     ({backgroundColor, fontColor, fontWeight, fontSize, fontFamily} = buttonSettings[buttonSettings.style]);
 
     const button = `
@@ -152,7 +136,7 @@ function setButton(){
             <table align="${buttonSettings.position}" bgcolor="${backgroundColor}" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:initial !important; border:2px solid ${backgroundColor}; border-radius:32px;">
                 <tr>
                     <td style="padding: 8px 16px; text-align: center;" valign="top">
-                        <b><a alias="${buttonSettings.alias}" href="${buttonSettings.link}" style="font-family:${fontFamily};color:${fontColor};font-size:${fontSize};font-weight:${fontWeight};text-decoration:none;" target="_blank" title="${buttonSettings.title}">${buttonSettings.title}</a></b>
+                        <b><a alias="${buttonSettings.alias}" href="${ensureHttps(buttonSettings.link)}" style="font-family:${fontFamily};color:${fontColor};font-size:${fontSize};font-weight:${fontWeight};text-decoration:none;" target="_blank" title="${buttonSettings.title}">${buttonSettings.title}</a></b>
                     </td>
                 </tr>
             </table>

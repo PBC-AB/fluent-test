@@ -149,7 +149,7 @@ async function getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSe
 
 async function load_ui(thisAppURL){
 
-  const payload = { url : thisAppURL }
+  const payload = { url : window.location.origin }
 
   const options = {
     method: 'POST',
@@ -157,7 +157,7 @@ async function load_ui(thisAppURL){
     body: JSON.stringify(payload)
   }
 
-  return fetch('load-ui', options)
+  return fetch('/load-ui', options)
     .then(response => response.json())
     .then(html => {
       return html

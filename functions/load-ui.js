@@ -1,7 +1,9 @@
 export async function onRequest(context) {
     
     const { request } = context;
+    const data = await request.json();
     /*const url = new URL(await request.url);
+
 
     // Check if the request is for the root URL or index.html
     if (url.pathname === '/' || url.pathname === '/index.html') {
@@ -19,6 +21,6 @@ export async function onRequest(context) {
         headers: response.headers
     });*/
 
-    return new Response(request.json());
+    return new Response(data);
 
 }

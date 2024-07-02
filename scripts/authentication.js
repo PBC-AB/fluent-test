@@ -8,6 +8,10 @@ let sdk = new window.sfdc.BlockSDK({
 });
 
 let scripts = ['/scripts/blocksdk.js', '/scripts/script.js'];
+let webAppClientId;
+let webAppClientSecret;
+let authEndpoint;
+let restEndpoint;
 
 async function initialize(){
 
@@ -15,72 +19,21 @@ async function initialize(){
 
   let thisAppURL = window.location.origin + '/';
 
-  let webAppClientId;
-  let webAppClientSecret;
-  let authEndpoint;
-  let restEndpoint;
-
-  // Script should only run on base url
+  // Script should only run on base url / origin
   if (thisAppURL != window.location.href) return;
 
-  try {
-    /*const response = await fetch('/credentials', {method:'POST'});
-    if(!response.ok) return;
-    const responseText = await response.text();
-    const credentials = JSON.parse(responseText);*/
-
-    const credentials = await getCredentials();
-    ({ webAppClientId, webAppClientSecret, authEndpoint, restEndpoint } = credentials);
-    console.log('webAppClientId', webAppClientId);
-    
-  } catch(e){
-    console.log('No credentials', e);
-    displayUnauthorized('No credentials.');
-    return;
-  }
-  
-  // This script should only run on main frame
+  // And it should only run on a marketing cloud frame
   if (!/content-builder\..*\.marketingcloudapps.com/.test(document.location.ancestorOrigins[0])){
     displayUnauthorized("App is not running on valid environment.");
     return;
   }
+  
+  const credentials = await getCredentials();
+  ({ webAppClientId, webAppClientSecret, authEndpoint, restEndpoint } = credentials);
+  //console.log('credentials', credentials);
 
-  // Retrieving Auth Code
-  sdk.triggerAuth2({authURL: authEndpoint, clientId: webAppClientId, redirectURL: thisAppURL});
-
-  // Wait for iframe + widget itself to load before progressing
-  // Identifies and gets the authcode from the iframe url created by sdk.triggerAuth2
-  let authframe = document.querySelector(".authframe");
-  let frameURL = "";
-
-  let waited_milliseconds = 0;
-  const MAX_WAIT_MILLISECONDS = 2000;
-  while(waited_milliseconds < MAX_WAIT_MILLISECONDS){
-    frameURL = authframe.contentWindow.location.href;
-    if(frameURL == "" || frameURL == "about:blank" ){
-      waited_milliseconds += 100;
-      await sleep(100);
-    } else {
-      break;
-    }
-  }
-
-  //console.log(waited_milliseconds);
-
-  let authCode = "";
-  if(frameURL && frameURL != "about:blank"){
-    let url = new URL(frameURL);
-    authCode = url.searchParams.get("code");
-    //console.log("Authcode", authCode);
-  }
-
-  //Terminate iframe 
-  authframe.remove();
-
-  if (!authCode) {
-    displayUnauthorized("Authorization failed.");
-    return;
-  }
+  const authCode = await getAuthCode();
+  //console.log('getAuthCode', getAuthCode);
 
   try {
     // Retrieving account information with auth code
@@ -93,8 +46,6 @@ async function initialize(){
   } catch (e){
     throw e; 
   }
-    
-  
   
 }
 
@@ -187,4 +138,46 @@ async function getCredentials(){
     }
 
     return credentials;
+}
+
+async function getAuthCode(){
+
+  // Retrieving Auth Code
+  sdk.triggerAuth2({authURL: authEndpoint, clientId: webAppClientId, redirectURL: thisAppURL});
+
+  // Wait for iframe + widget itself to load before progressing
+  // Identifies and gets the authcode from the iframe url created by sdk.triggerAuth2
+  let authframe = document.querySelector(".authframe");
+  let frameURL = "";
+
+  let waited_milliseconds = 0;
+  const MAX_WAIT_MILLISECONDS = 2000;
+  while(waited_milliseconds < MAX_WAIT_MILLISECONDS){
+    frameURL = authframe.contentWindow.location.href;
+    if(frameURL == "" || frameURL == "about:blank" ){
+      waited_milliseconds += 100;
+      await sleep(100);
+    } else {
+      break;
+    }
+  }
+
+  //console.log(waited_milliseconds);
+
+  let authCode = "";
+  if(frameURL && frameURL != "about:blank"){
+    let url = new URL(frameURL);
+    authCode = url.searchParams.get("code");
+    //console.log("Authcode", authCode);
+  }
+
+  //Terminate iframe 
+  authframe.remove();
+
+  if (!authCode) {
+    displayUnauthorized("Authorization failed.");
+    throw 'Authorization failed.'
+  }
+
+  return authCode;
 }

@@ -155,7 +155,6 @@ SDK.prototype.triggerAuth2 = function (authInfo) {
 	if(authInfo.state) {
 		state = '&state=' + authInfo.state;
 	}
-	console.log('About to auth')
 	iframe.src = authInfo.authURL + (authInfo.authURL.endsWith('/') ? '':'/') + 'v2/authorize?response_type=code&client_id=' + authInfo.clientId + '&redirect_uri=' + encodeURIComponent(authInfo.redirectURL) + scope + state;
 	iframe.style.width= '1px';
 	iframe.style.height = '1px';

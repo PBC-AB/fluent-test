@@ -19,6 +19,6 @@ export async function onRequest(context) {
         headers: response.headers
     });*/
 
-    return new Response(JSON.stringify(request));
+    return new Response(request.json());
 
 }

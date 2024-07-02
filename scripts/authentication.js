@@ -92,8 +92,7 @@ async function initialize(){
       console.log('accountid', accountId)
 
       console.log('thisAppURL', thisAppURL)
-      let newPage = await load_ui(thisAppURL);
-      console.log('newPage', newPage)
+      await load_ui(thisAppURL);
 
     } catch (e){
       throw e; 
@@ -158,11 +157,28 @@ async function load_ui(thisAppURL){
 
   console.log('payload', payload)
 
-  /*const response = await fetch('/load-ui', options);
-  const data = await response.text();
-  console.log('Response:', data);*/
+  try {
+    const response = await fetch('/load-ui', options);
+    const html = await response.text();
+    console.log('Response:', html);
 
-  fetch('/load-ui', options)
+    document.documentElement.innerHTML = html;
+    // Script that have been pasted with innerHTML won't run.
+    // This code below forces execution
+    scripts.forEach(script => {
+      let s = document.createElement('script');
+      s.src = script;
+      s.type = "text/javascript";
+      document.querySelector('head').appendChild(s);
+    })
+  } catch(e){
+    displayUnauthorized("Failed loading UI.");
+  }
+  
+
+
+
+  /*fetch('/load-ui', options)
     .then(response => response.json())
     .then(html => {
 
@@ -176,5 +192,7 @@ async function load_ui(thisAppURL){
         document.querySelector('head').appendChild(s);
       })
     })
-    .catch(error => displayUnauthorized("Failed loading UI."));
+    .catch(error => displayUnauthorized("Failed loading UI."));*/
+
+    return;
 }

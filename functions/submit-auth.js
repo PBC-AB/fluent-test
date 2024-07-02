@@ -23,10 +23,9 @@ export async function onRequest(context){;
         const org_response = await fetch(restEndpoint + "platform/v1/tokenContext", { headers :{'Authorization': 'Bearer ' + access_token}})
         const org_data = await org_response.json();
         const accountId = org_data.organization.id;
-        return new Response(accountId, {headers: {'Content-Type' : 'text/plain'}});
 
+        return new Response(accountId, {headers: {'Content-Type' : 'text/plain'}});
     } catch (e){
         return new Response('Error', {status: 400});
     }
-    return new Response('Method not allowed', {status: 400});
 }

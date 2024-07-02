@@ -87,47 +87,16 @@ async function initialize(){
     }
 
     try {
-      // Get AccountID
-      await fetch('/submit-auth', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ authCode: authCode, 
-          thisAppURL : thisAppURL, 
-          webAppClientId : webAppClientId, 
-          webAppClientSecret : webAppClientSecret, 
-          authEndpoint : authEndpoint,
-          restEndpoint : restEndpoint })
-      })
-      .then(response => {
-       
-      }).then( async mid => {
-        // AUTH IS OK -> LOAD UI
-        console.log('mid', mid)
 
-        // DO SOMETHING WITH MID
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    } catch (error) {
-      throw error; 
+      const accountId = await getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint);
+      console.log(accountId)
+
+      let newPage = await load_ui(thisAppURL);
+      console.log(newPage)
+
+    } catch (e){
+      throw e; 
     }
-
-    try{
-      console.log('Fetch load-ui')
-      await fetch('/load-ui').then( response => {
-        if (response.ok) {
-          return response.text(); 
-        } else {
-          throw new Error('Error: ' + response.status + ' - ' + response.statusText);
-        }
-      }).then((data)=>{
-        console.log(data);
-      })
-    } catch(e){
-
-    }
-
     
   }
   
@@ -143,8 +112,51 @@ function displayUnauthorized(text){
   document.querySelector('.container').innerHTML = "Unauthorized: " + text;
 }
 
-function load_ui(){
-  fetch('load-ui')
+// Needs auth code to do so
+async function getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint) {
+
+  const payload = { 
+    authCode: authCode, 
+    thisAppURL : thisAppURL, 
+    webAppClientId : webAppClientId, 
+    webAppClientSecret : webAppClientSecret, 
+    authEndpoint : authEndpoint,
+    restEndpoint : restEndpoint 
+  }
+
+  const options = {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  }
+
+  fetch('/submit-auth', options)
+    .then( response => {
+      if (response.ok) {
+        return response.text(); 
+      } else {
+        throw new Error('Error: ' + response.status + ' - ' + response.statusText);
+      }
+    })
+    .then(mid => {
+      return mid;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+async function load_ui(thisAppURL){
+
+  const payload = { url: thisAppURL }
+
+  const options = {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  }
+
+  fetch('load-ui', options)
     .then(response => response.text())
     .then(html => {
       document.documentElement.innerHTML = html

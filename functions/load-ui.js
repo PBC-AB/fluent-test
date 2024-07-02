@@ -1,7 +1,7 @@
 export async function onRequest(context) {
     
     const { request } = context;
-    const { origin } = request.method; 
+    const origin  = request.method; 
 
     /*const url = new URL(await request.url);
 
@@ -22,6 +22,6 @@ export async function onRequest(context) {
         headers: response.headers
     });*/
 
-    return new Response(origin,{ headers: {'Content-Type' : 'text/plain'}});
+    return new Response(origin);
 
 }

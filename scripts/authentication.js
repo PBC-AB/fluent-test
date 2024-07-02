@@ -158,7 +158,7 @@ async function load_ui(thisAppURL){
   }
 
   return fetch('load-ui', options)
-    .then(response => response.text())
+    .then(response => response.json())
     .then(html => {
       return html
       /*document.documentElement.innerHTML = html

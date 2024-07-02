@@ -1,15 +1,14 @@
 export async function onRequest(context) {
     
     const { request } = context;
-    const url = request.url;
-    const json =  await request.json();
-    json_url = json.url;
+    const url = request.url; 
+    const json = await request.json(); 
+    const json_url = json.url; 
 
     let data2 = {
-        url : url,
-        json_url : json_url
-    }
-
+        url: url,
+        json_url: json_url
+    };
     /*const url = new URL(await request.url);
 
 

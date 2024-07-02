@@ -159,7 +159,7 @@ async function load_ui(thisAppURL){
   console.log('payload', payload)
 
   const response = await fetch('/load-ui', options);
-  const data = await response.json();
+  const data = await response.text();
   console.log('Response:', data);
 
   /*return fetch('/load-ui', options)

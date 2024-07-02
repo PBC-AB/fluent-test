@@ -129,7 +129,7 @@ function setButton(){
         <td height="${buttonSettings.top}"></td>
     </tr>
     <tr>
-        <td align="center" style="padding: 0 ${buttonSettings.left}px 0 ${buttonSettings.right}px" valign="middle">
+        <td align="center" style="padding: 0 ${buttonSettings.right}px 0 ${buttonSettings.left}px" valign="middle">
             <table align="${buttonSettings.position}" bgcolor="${backgroundColor}" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:initial !important; border:2px solid ${backgroundColor}; border-radius:32px;">
                 <tr>
                     <td style="padding: 8px 16px; text-align: center;" valign="top">

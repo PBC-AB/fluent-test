@@ -1,4 +1,4 @@
-export async function onRequest(context){;
+export async function onRequest(context){
 
     const { request } = context;
     const { authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint } = await request.json();

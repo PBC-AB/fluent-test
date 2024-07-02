@@ -1,13 +1,13 @@
 export async function onRequest(context) {
     
     const { request } = context;
-    const url =  await request.url;
+    const url = request.url;
     const json =  await request.json();
     json_url = json.url;
 
     let data2 = {
-        url : json,
-        json_url : req_json
+        url : url,
+        json_url : json_url
     }
 
     /*const url = new URL(await request.url);
@@ -29,6 +29,8 @@ export async function onRequest(context) {
         headers: response.headers
     });*/
 
-    return new Response(data2);
+    return new Response(JSON.stringify(data2), {
+        headers: { 'Content-Type': 'application/json' },
+    });
 
 }

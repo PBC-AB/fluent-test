@@ -35,16 +35,10 @@ async function initialize(){
   const authCode = await getAuthCode();
   //console.log('getAuthCode', getAuthCode);
 
-  try {
+  const accountId = await getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint);
+  //console.log('accountid', accountId)
 
-    const accountId = await getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint);
-    //console.log('accountid', accountId)
-
-    await load_ui(thisAppURL);
-
-  } catch (e){
-    throw e; 
-  }
+  await load_ui(thisAppURL);
   
 }
 
@@ -59,6 +53,8 @@ function displayUnauthorized(text){
 }
 
 async function getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint) {
+
+  let accountId;
 
   const payload = { 
     authCode: authCode, 
@@ -75,28 +71,11 @@ async function getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSe
     body: JSON.stringify(payload)
   }
 
-  let mid = "";
-
-  /*return fetch('/submit-auth', options)
-    .then( response => {
-      if (response.ok) {
-        return response.text(); 
-      } else {
-        throw new Error('Error: ' + response.status + ' - ' + response.statusText);
-      }
-    })
-    .then(mid => {
-      return mid;
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });*/
-
   try { 
     const response = await fetch('/submit-auth', options);
-    mid = response.text();
+    accountId = response.text();
 
-    if(!mid){
+    if(!accountId){
       throw 'Failed to retrieve AccountId.';
     }
 
@@ -105,7 +84,7 @@ async function getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSe
     throw 'Failed to retrieve AccountId.';
   }
 
-  return mid;
+  return accountId;
 
 }
 
@@ -125,6 +104,10 @@ async function load_ui(thisAppURL){
     const html = await response.text();
     //console.log('Response:', html);
 
+    if(!html){
+      throw 'Failed loading UI.';
+    }
+
     document.documentElement.innerHTML = html;
     // Script that have been pasted with innerHTML won't run.
     // This code below forces execution
@@ -134,8 +117,10 @@ async function load_ui(thisAppURL){
       s.type = "text/javascript";
       document.querySelector('head').appendChild(s);
     })
+
   } catch(e){
     displayUnauthorized("Failed loading UI.");
+    throw 'Failed loading UI.'
   }
 
   return;

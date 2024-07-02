@@ -1,7 +1,7 @@
 export async function onRequest(context) {
     
     const { request } = context;
-    const { origin } = await request.json(); 
+    const { origin } = request.method; 
 
     /*const url = new URL(await request.url);
 

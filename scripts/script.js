@@ -23,11 +23,15 @@ const buttonSettings = {
         fontColor : "#FFFFFF",
         backgroundColor: "#1f2e7a",
         fontWeight: "bold",
+        fontSize: "16px",
+        fontFamily : '"EconSansOSBol", "Segoe UI", Helvetica, Arial, sans-serif'
     },
     style2 : {
         fontColor : "#FFFFFF",
         backgroundColor: "#0D0D0D",
         fontWeight: "bold",
+        fontSize: "16px",
+        fontFamily : '"EconSansOSBol", "Segoe UI", Helvetica, Arial, sans-serif'
     }
 }
 
@@ -43,7 +47,7 @@ const initSelectElements = () => {
 
     const selectEntries = {
         position: ['left', 'center', 'right'],
-        style:['style1', 'style2', 'style3'],
+        style:['style1', 'style2'],
         topMargin:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','25','30','40'],
         bottomMargin:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','25','30','40']
     }
@@ -71,7 +75,7 @@ const initSelectElements = () => {
 function initButtonSettings(){
     sdk.getData((data)=>{
         buttonSettings.title = data.title || "Please click here";
-        buttonSettings.link = data.link || "";
+        buttonSettings.link = data.link || "https://www.economist.com/";
         buttonSettings.alias = data.alias || "";
         buttonSettings.position = data.position || "center";
         buttonSettings.style = data.style || "style1";
@@ -80,7 +84,7 @@ function initButtonSettings(){
 
         // Assign values to input ui 
         buttonTitle__input.value = buttonSettings.title;
-        buttonLink__input.value = buttonSettings.link;
+        buttonLink__input.value = ensureHttps(buttonSettings.link);
         buttonAlias__input.value = buttonSettings.alias;
         buttonPosition__select.value = buttonSettings.position;
         buttonStyle__select.value = buttonSettings.style;
@@ -135,29 +139,27 @@ function setButton(){
     </table>
     `*/
 
-    ({backgroundColor, fontColor, fontWeight} = buttonSettings[buttonSettings.style]);
+    ({backgroundColor, fontColor, fontWeight, fontSize, fontFamily} = buttonSettings[buttonSettings.style]);
 
     const button = `
     <!-- CTA -->
     <table border="0" cellpadding="0" cellspacing="0" style="max-width:600px;" width="100%">
     <tr>
-        <td height="${buttonSettings.top}">
-        </td>
+        <td height="${buttonSettings.top}"></td>
     </tr>
     <tr>
         <td align="center" style="padding: 0 16px" valign="middle">
             <table align="${buttonSettings.position}" bgcolor="${backgroundColor}" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:initial !important; border:2px solid ${backgroundColor}; border-radius:32px;">
-            <tr>
-                <td style="padding: 8px 16px; text-align: center;" valign="top">
-                    <b><a alias="${buttonSettings.alias}" href="${buttonSettings.link}" style="color:${fontColor};text-decoration:none;font-weight:${fontWeight};" target="_blank" title="${buttonSettings.title}">${buttonSettings.title}</a></b>
-                </td>
-            </tr>
+                <tr>
+                    <td style="padding: 8px 16px; text-align: center;" valign="top">
+                        <b><a alias="${buttonSettings.alias}" href="${buttonSettings.link}" style="font-family:${fontFamily};color:${fontColor};font-size:${fontSize};font-weight:${fontWeight};text-decoration:none;" target="_blank" title="${buttonSettings.title}">${buttonSettings.title}</a></b>
+                    </td>
+                </tr>
             </table>
         </td>
     </tr>
     <tr>
-        <td height="${buttonSettings.bottom}">
-        </td>
+        <td height="${buttonSettings.bottom}"></td>
     </tr>
     </table>
     <!-- //CTA -->
@@ -180,3 +182,15 @@ initSelectElements();
 initButtonSettings();
 initUiListeners();
 
+function ensureHttps(url) {
+    // Regular expression to check if the URL starts with "http://" or "https://"
+    const regex = /^(http:\/\/|https:\/\/)/i;
+
+    // Check if the URL matches the regular expression
+    if (!regex.test(url)) {
+        // If it doesn't, prepend "https://"
+        url = 'https://' + url;
+    }
+
+    return url;
+}

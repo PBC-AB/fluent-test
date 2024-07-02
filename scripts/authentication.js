@@ -91,6 +91,7 @@ async function initialize(){
       const accountId = await getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint);
       console.log('accountid', accountId)
 
+      console.log('thisAppURL', thisAppURL)
       let newPage = await load_ui(thisAppURL);
       console.log('newPage', newPage)
 

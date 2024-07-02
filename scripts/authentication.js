@@ -11,7 +11,7 @@ let scripts = ['/scripts/blocksdk.js', '/scripts/script.js'];
 
 async function initialize(){
 
-  console.log('Is being called', window.location.href)
+  console.log('Custom Content Block is being called by: ', window.location.href);
 
   let thisAppURL = window.location.origin + '/';
 
@@ -24,11 +24,12 @@ async function initialize(){
   if (thisAppURL != window.location.href) return;
 
   try {
-    const response = await fetch('/credentials', {method:'POST'});
+    /*const response = await fetch('/credentials', {method:'POST'});
     if(!response.ok) return;
     const responseText = await response.text();
-    const credentials = JSON.parse(responseText);
+    const credentials = JSON.parse(responseText);*/
 
+    const credentials = await getCredentials();
     if(!credentials) return;
 
     webAppClientId = credentials.webAppClientId;
@@ -36,70 +37,70 @@ async function initialize(){
     authEndpoint = credentials.authEndpoint;
     restEndpoint = credentials.restEndpoint;
 
-    console.log('credentials', credentials);
+    //console.log('credentials', credentials);
     
   } catch(e){
-    console.log(e);
+    console.log('No credentials', e);
     displayUnauthorized('No credentials.');
     return;
   }
   
   // This script should only run on main frame
-  if (/content-builder\..*\.marketingcloudapps.com/.test(document.location.ancestorOrigins[0])){
-  //if (window.location.href == thisAppURL){
-
-    sdk.triggerAuth2({authURL: authEndpoint, clientId: webAppClientId, redirectURL: thisAppURL});
-
-    // Wait for iframe + widget itself to load before progressing
-    // Identifies and gets the authcode from the iframe url created by sdk.triggerAuth2
-    let authframe = document.querySelector(".authframe");
-    let frameURL = "";
-
-    let waited_milliseconds = 0;
-    const MAX_WAIT_MILLISECONDS = 2000;
-    while(waited_milliseconds < MAX_WAIT_MILLISECONDS){
-      frameURL = authframe.contentWindow.location.href;
-      if(frameURL == "" || frameURL == "about:blank" ){
-        waited_milliseconds += 100;
-        await sleep(100);
-      } else {
-        break;
-      }
-    }
-
-    console.log(waited_milliseconds);
-
-    //frameURL = authframe.contentWindow.location.href;
-    //console.log("frameURL", frameURL)
-
-    let authCode = "";
-    if(frameURL && frameURL != "about:blank"){
-      let url = new URL(frameURL);
-      authCode = url.searchParams.get("code");
-      console.log("Authcode", authCode);
-    }
-
-    //Terminate iframe 
-    authframe.remove();
-
-    if (!authCode) {
-      displayUnauthorized("App is not running on valid environment.");
-      return;
-    }
-
-    try {
-
-      const accountId = await getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint);
-      console.log('accountid', accountId)
-
-      console.log('thisAppURL', thisAppURL)
-      await load_ui(thisAppURL);
-
-    } catch (e){
-      throw e; 
-    }
-    
+  if (!/content-builder\..*\.marketingcloudapps.com/.test(document.location.ancestorOrigins[0])){
+    displayUnauthorized("App is not running on valid environment.");
+    return;
   }
+
+  // Retrieving Auth Code
+  sdk.triggerAuth2({authURL: authEndpoint, clientId: webAppClientId, redirectURL: thisAppURL});
+
+  // Wait for iframe + widget itself to load before progressing
+  // Identifies and gets the authcode from the iframe url created by sdk.triggerAuth2
+  let authframe = document.querySelector(".authframe");
+  let frameURL = "";
+
+  let waited_milliseconds = 0;
+  const MAX_WAIT_MILLISECONDS = 2000;
+  while(waited_milliseconds < MAX_WAIT_MILLISECONDS){
+    frameURL = authframe.contentWindow.location.href;
+    if(frameURL == "" || frameURL == "about:blank" ){
+      waited_milliseconds += 100;
+      await sleep(100);
+    } else {
+      break;
+    }
+  }
+
+  //console.log(waited_milliseconds);
+
+  let authCode = "";
+  if(frameURL && frameURL != "about:blank"){
+    let url = new URL(frameURL);
+    authCode = url.searchParams.get("code");
+    //console.log("Authcode", authCode);
+  }
+
+  //Terminate iframe 
+  authframe.remove();
+
+  if (!authCode) {
+    displayUnauthorized("Authorization failed.");
+    return;
+  }
+
+  try {
+    // Retrieving account information with auth code
+    const accountId = await getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint);
+    console.log('accountid', accountId)
+
+    console.log('thisAppURL', thisAppURL)
+    await load_ui(thisAppURL);
+
+  } catch (e){
+    throw e; 
+  }
+    
+  
   
 }
 
@@ -113,7 +114,6 @@ function displayUnauthorized(text){
   document.querySelector('.container').innerHTML = "Unauthorized: " + text;
 }
 
-// Needs auth code to do so
 async function getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint) {
 
   const payload = { 
@@ -177,4 +177,20 @@ async function load_ui(thisAppURL){
   }
 
   return;
+}
+
+async function getCredentials(){
+
+    let credentials = {};
+
+    const response = await fetch('/credentials', {method:'POST'});
+    const responseText = await response.text();
+    credentials = JSON.parse(responseText);
+
+    if(!credentials){
+      displayUnauthorized('No credentials.');
+      throw 'No credentials.'
+    }
+
+    return credentials;
 }

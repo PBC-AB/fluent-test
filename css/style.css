@@ -38,6 +38,9 @@ h1{
 input, select {
   font-family: 'Salesforce Sans', Arial, Sans-serif;
   font-size: 11px;
+  height: 20px;
+  border: 1px solid #d1d1d1;
+  border-radius: 3px;
 }
 
 .label_container{
@@ -49,7 +52,8 @@ input, select {
 .tooltip {
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted #212121; /* If you want dots under the hoverable text */
+  border-bottom: 2px dotted #212121; /* If you want dots under the hoverable text */
+  font-weight: bold;
 }
 
 /* Tooltip text */

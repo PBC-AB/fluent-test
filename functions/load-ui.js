@@ -22,6 +22,6 @@ export async function onRequest(context) {
         headers: response.headers
     });*/
 
-    return new Response(origin);
+    return new Response(origin,{ headers: {'Content-Type' : 'text/plain'}});
 
 }

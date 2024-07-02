@@ -149,7 +149,7 @@ async function getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSe
 
 async function load_ui(thisAppURL){
 
-  const payload = { url: window.location.origin };
+  const payload = { origin : window.location.origin };
 
   const options = {
     method: 'POST',

@@ -8,6 +8,8 @@ let sdk = new window.sfdc.BlockSDK({
 });
 
 let scripts = ['/scripts/blocksdk.js', '/scripts/script.js'];
+
+let thisAppURL = window.location.origin + '/';
 let webAppClientId;
 let webAppClientSecret;
 let authEndpoint;
@@ -16,9 +18,6 @@ let restEndpoint;
 async function initialize(){
 
   console.log('Custom Content Block is being called by: ', window.location.href);
-
-  let thisAppURL = window.location.origin + '/';
-
   // Script should only run on base url / origin
   if (thisAppURL != window.location.href) return;
 

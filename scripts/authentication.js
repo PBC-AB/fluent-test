@@ -158,15 +158,15 @@ async function load_ui(thisAppURL){
 
   console.log('payload', payload)
 
-  const response = await fetch('/load-ui', options);
+  /*const response = await fetch('/load-ui', options);
   const data = await response.text();
-  console.log('Response:', data);
+  console.log('Response:', data);*/
 
-  /*return fetch('/load-ui', options)
+  fetch('/load-ui', options)
     .then(response => response.json())
     .then(html => {
-      return html
-      /*document.documentElement.innerHTML = html
+
+      document.documentElement.innerHTML = html;
       // Script that have been pasted with innerHTML won't run.
       // This code below forces execution
       scripts.forEach(script => {
@@ -176,5 +176,5 @@ async function load_ui(thisAppURL){
         document.querySelector('head').appendChild(s);
       })
     })
-    .catch(error => displayUnauthorized("Failed loading UI."));*/
+    .catch(error => displayUnauthorized("Failed loading UI."));
 }

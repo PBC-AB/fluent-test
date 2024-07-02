@@ -22,19 +22,17 @@ export async function onRequest(context) {
     if (!link) {
         return new Response('Link not provided', { status: 400 });
     }
-
-    /*
+    
     // Create a response object
     const responseData = {
         receivedLink: link,
     };
     // Return the response as JSON
-     return new Response(JSON.stringify(responseData), {
+    return new Response(JSON.stringify(responseData), {
         headers: { 'Content-Type': 'application/json' },
-    });*/
+    });
     
-    const url = new URL(link + '/ccb-ui.html');
-    console.log('toString URL', url.toString())
+    /*const url = new URL(link + '/ccb-ui.html');
 
     // Fetch the modified URL
     const htmlResponse = await fetch(url.toString());
@@ -50,7 +48,7 @@ export async function onRequest(context) {
     // Return the response
     return new Response(html, {
         headers: { 'Content-Type': 'text/html' },
-    });
+    });*/
 
     /*return new Response(origin); */
 

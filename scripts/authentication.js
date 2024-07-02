@@ -20,6 +20,7 @@ async function initialize(){
   let authEndpoint;
   let restEndpoint;
 
+  // Script should only run on base url
   if (thisAppURL != window.location.href) return;
 
   try {
@@ -148,7 +149,7 @@ async function getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSe
 
 async function load_ui(thisAppURL){
 
-  const payload = { link: window.location.origin };
+  const payload = { link: window.location.origin + '/ccb-ui.html'};
   const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -174,25 +175,6 @@ async function load_ui(thisAppURL){
   } catch(e){
     displayUnauthorized("Failed loading UI.");
   }
-  
 
-
-
-  /*fetch('/load-ui', options)
-    .then(response => response.json())
-    .then(html => {
-
-      document.documentElement.innerHTML = html;
-      // Script that have been pasted with innerHTML won't run.
-      // This code below forces execution
-      scripts.forEach(script => {
-        let s = document.createElement('script');
-        s.src = script;
-        s.type = "text/javascript";
-        document.querySelector('head').appendChild(s);
-      })
-    })
-    .catch(error => displayUnauthorized("Failed loading UI."));*/
-
-    return;
+  return;
 }

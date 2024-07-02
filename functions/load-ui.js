@@ -23,17 +23,8 @@ export async function onRequest(context) {
         return new Response('Link not provided', { status: 400 });
     }
 
-    // Create a response object
-    /*const responseData = {
-        receivedLink: link,
-    };
-    // Return the response as JSON
-    return new Response(JSON.stringify(responseData), {
-        headers: { 'Content-Type': 'application/json' },
-    });*/
-    
     // Fetch the modified URL
-    const htmlResponse = await fetch(link + '/ccb-ui.html');
+    const htmlResponse = await fetch(link);
     if (!htmlResponse.ok) {
         return new Response('Failed to fetch the URL', { status: htmlResponse.status });
     }
@@ -45,7 +36,5 @@ export async function onRequest(context) {
     return new Response(html, {
         headers: { 'Content-Type': 'text/html' },
     });
-
-    /*return new Response(origin); */
 
 }

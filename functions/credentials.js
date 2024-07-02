@@ -4,7 +4,7 @@ export async function onRequest(context){;
 
     // Change to context.env.APP_URL_BUTTON
     // Create ENV Variable
-    const validURL = "https://fluent-test.pages.dev/"; 
+    const validURL = context.env.APP_URL_BUTTON; 
 
     if(request.method === 'POST'){
         

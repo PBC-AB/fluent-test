@@ -130,13 +130,15 @@ function setButton(){
     </tr>
     <tr>
         <td align="center" style="padding: 0 ${buttonSettings.right}px 0 ${buttonSettings.left}px" valign="middle">
+        <a alias="${buttonSettings.alias}" href="${ensureHttps(buttonSettings.link)}" target="_blank" title="${buttonSettings.title}">
             <table align="${buttonSettings.position}" bgcolor="${backgroundColor}" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:initial !important; border:2px solid ${backgroundColor}; border-radius:32px;">
                 <tr>
                     <td style="padding: 8px 16px; text-align: center;" valign="top">
-                        <b><a alias="${buttonSettings.alias}" href="${ensureHttps(buttonSettings.link)}" style="font-family:${fontFamily};color:${fontColor};font-size:${fontSize};font-weight:${fontWeight};text-decoration:none;" target="_blank" title="${buttonSettings.title}">${buttonSettings.title}</a></b>
+                        <b style="font-family:${fontFamily};color:${fontColor};font-size:${fontSize};font-weight:${fontWeight};text-decoration:none;">${buttonSettings.title}</b>
                     </td>
                 </tr>
             </table>
+        </a>
         </td>
     </tr>
     <tr>

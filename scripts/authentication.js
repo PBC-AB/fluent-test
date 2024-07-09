@@ -153,7 +153,7 @@ async function getAuthCode(){
   let frameURL = "";
 
   let waited_milliseconds = 0;
-  const MAX_WAIT_MILLISECONDS = 2000;
+  const MAX_WAIT_MILLISECONDS = 3000;
   while(waited_milliseconds < MAX_WAIT_MILLISECONDS){
     frameURL = authframe.contentWindow.location.href;
     if(frameURL == "" || frameURL == "about:blank" ){

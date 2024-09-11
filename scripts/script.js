@@ -21,6 +21,13 @@ const buttonSettings = {
         fontWeight: "bold",
         fontSize: "16px",
         fontFamily : "'EconSansOSBol', 'Segoe UI', Helvetica, Arial, sans-serif"
+    },
+    style3 : {
+        fontColor : "#FFFFFF",
+        backgroundColor: "#0D0D0D",
+        fontWeight: "normal",
+        fontSize: "14px",
+        fontFamily : "'EconSansOSReg', 'Segoe UI', Helvetica, Arial, sans-serif;"
     }
 }
 
@@ -40,7 +47,7 @@ const initSelectElements = () => {
 
     const selectEntries = {
         position: ['left', 'center', 'right'],
-        style:['style1', 'style2'],
+        style:['style1', 'style2', 'style3'],
         topMargin:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','25','30','40'],
         bottomMargin:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','25','30','40'],
         leftMargin:['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','25','30','40'],
@@ -201,7 +208,11 @@ link__select.addEventListener('change', () => {
             }
         });
 
+        const final_link = selectedProtocol + linkValue;
+
         // Update the input field with the selected protocol
-        buttonLink__input.value = selectedProtocol + linkValue;
+        buttonSettings.link = final_link;
+        buttonLink__input.value = final_link;
+        
     }
 })

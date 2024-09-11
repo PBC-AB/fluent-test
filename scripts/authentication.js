@@ -17,7 +17,7 @@ let restEndpoint;
 
 async function initialize(){
 
-  console.log('Custom Content Block is being called by: ', window.location.href);
+  //console.log('Custom Content Block is being called by: ', window.location.href);
   // Script should only run on base url / origin
   if (thisAppURL != window.location.href) return;
 

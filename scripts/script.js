@@ -202,6 +202,6 @@ link__select.addEventListener('change', () => {
         });
 
         // Update the input field with the selected protocol
-        input.value = selectedProtocol + linkValue;
+        buttonLink__input.value = selectedProtocol + linkValue;
     }
 })

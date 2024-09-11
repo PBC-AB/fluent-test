@@ -8,10 +8,10 @@
 </head>
 <body>
     <div class="container">
-      <h1>Button (Custom)</h1>
+      <h1>Economist Button Widget</h1>
       <div class="input_container">
         <div class="label_container">
-          <label >Title (Button Text)</label>
+          <label>Button Text</label>
           <div class="tooltip">?
             <span class="tooltiptext">This text will appear on the button</span>
           </div>
@@ -25,37 +25,52 @@
             <span class="tooltiptext">Make sure you have 'https://', 'http://' or 'mailto:' in front of your link.</span>
           </div>
         </div>
-        <input class="buttonLink__input" type="text"  placeholder="Button Link"></input>
+        <div class="link_container">
+          <select class="link__select">
+            <option value="https://">https://</option>
+            <option value="http://">http://</option>
+            <option value="mailto:">mailto:</option>
+          </select>
+          <input class="buttonLink__input" type="text"  placeholder="Button Link"></input>
+        </div>
       </div>
       <div class="input_container">
         <div class="label_container">
-          <label >Alias (utm-content)</label>
+          <label>UTM-Content (Alias)</label>
           <div class="tooltip">?
-            <span class="tooltiptext">Will appear in utm_content</span>
+            <span class="tooltiptext">Value will appear in url parameter utm_content</span>
           </div>
         </div>
         <input class="buttonAlias__input" type="text" placeholder="UTM-Parameter"></input>
       </div>
       <div class="input_container">
         <!-- Drop down -->
-        <label >Position</label>
+        <div class="label_container">
+          <label >Position</label>
+        </div>
         <select class="buttonPosition__select" name="buttonPosition__select" id="buttonPosition_select"></select>
       </div>
       <div class="input_container">
         <!-- Drop down -->
-        <label >Style</label>
+        <div class="label_container">
+          <label >Style</label>
+        </div>
         <select class="buttonStyle__select" name="buttonStyle__select" id="buttonStyle__select"></select>
       </div>
 
       <div class="input_container_two_column">
         <div class="input_container">
           <!-- Drop down -->
-          <label >Left-Margin (px)</label>
+          <div class="label_container">
+            <label >Left-Margin (px)</label>
+          </div>
           <select class="leftMargin__select" name="leftMargin__select" id="leftMargin__select"></select>
         </div>
         <div class="input_container">
           <!-- Drop down -->
-          <label >Right-Margin (px)</label>
+          <div class="label_container">
+            <label >Right-Margin (px)</label>
+          </div>
           <select class="rightMargin__select" name="rightMargin__select" id="rightMargin__select"></select>
         </div>
       </div>
@@ -63,12 +78,16 @@
       <div class="input_container_two_column">
         <div class="input_container">
           <!-- Drop down -->
+          <div class="label_container">
           <label >Top-Margin (px)</label>
+          </div>
           <select class="topMargin__select" name="topMargin__select" id="topMargin__select"></select>
         </div>
         <div class="input_container">
           <!-- Drop down -->
+          <div class="label_container">
           <label >Bottom-Margin (px)</label>
+          </div>
           <select class="bottomMargin__select" name="bottomMargin__select" id="bottomMargin__select"></select>
         </div>
       </div>

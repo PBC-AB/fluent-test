@@ -25,6 +25,7 @@ const buttonSettings = {
 }
 
 const buttonTitle__input = document.querySelector('.buttonTitle__input');
+const link__select = document.querySelector('.link__select');
 const buttonLink__input = document.querySelector('.buttonLink__input');
 const buttonAlias__input = document.querySelector('.buttonAlias__input');
 const buttonPosition__select = document.querySelector('.buttonPosition__select');
@@ -33,6 +34,7 @@ const topMargin__select = document.querySelector('.topMargin__select');
 const bottomMargin__select = document.querySelector('.bottomMargin__select');
 const leftMargin__select = document.querySelector('.leftMargin__select');
 const rightMargin__select = document.querySelector('.rightMargin__select');
+
 
 const initSelectElements = () => {
 
@@ -169,14 +171,37 @@ initButtonSettings();
 initUiListeners();
 
 function ensureHttps(url) {
-    // Regular expression to check if the URL starts with "http://" or "https://"
-    const regex = /^(http:\/\/|https:\/\/)/i;
 
-    // Check if the URL matches the regular expression
-    if (!regex.test(url)) {
-        // If it doesn't, prepend "https://"
-        url = 'https://' + url;
-    }
+    // Find what protocol is currently used
+    const protocols = ['https://', 'http://', 'mailto:'];
+    let matchedProtocol = protocols.find(protocol => url.startsWith(protocol)) || "https://";
+
+    // Match protocol with select element
+    link__select.value = matchedProtocol;
+
+    // Appends protocol if non is applied
+    url = url.startsWith(matchedProtocol) ? url : matchedProtocol + url;
 
     return url;
 }
+
+link__select.addEventListener('change', () => {
+    
+    const selectedProtocol = link__select.value;
+    let linkValue = buttonLink__input.value.trim();
+
+    const protocols = ['https://', 'http://', 'mailto:'];
+
+    if(linkValue){
+
+        // Remove any existing protocol from the link
+        protocols.forEach(protocol => {
+            if (linkValue.startsWith(protocol)) {
+                linkValue = linkValue.substring(protocol.length);
+            }
+        });
+
+        // Update the input field with the selected protocol
+        input.value = selectedProtocol + linkValue;
+    }
+})

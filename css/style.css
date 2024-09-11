@@ -10,6 +10,7 @@ body {
 h1{
   font-size: 16px;
   margin-bottom: 30px;
+  letter-spacing: 1.4px;
 }
 
 .container {
@@ -20,17 +21,17 @@ h1{
   box-sizing: border-box;
 }
 
-.input_container_two_column{
+.input_container_two_column {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   gap: 20px;
 }
 
-.input_container{
+.input_container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
   gap: 5px;
   flex: 1;
 }
@@ -38,14 +39,31 @@ h1{
 input, select {
   font-family: 'Salesforce Sans', Arial, Sans-serif;
   font-size: 11px;
-  height: 20px;
-  border: 1px solid #d1d1d1;
+  height: 24px;
+  /*border: 1px solid #d1d1d1;*/
+  border: 0;
+  outline: 1px solid #d1d1d1;
   border-radius: 3px;
+  padding: 0 0 0 4px;
+}
+
+.link_container {
+  display: flex;
+  gap: 8px;
+}
+
+.link_container > select {
+  width: 100px;
+}
+
+.link_container > input {
+  flex: 1;
 }
 
 .label_container{
   display:flex;
   justify-content: space-between;
+  font-weight: bold;
 }
 
 /* Tooltip container */

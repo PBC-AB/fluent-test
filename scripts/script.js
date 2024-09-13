@@ -132,6 +132,8 @@ function setButton(){
     ({backgroundColor, fontColor, fontWeight, fontSize, fontFamily} = buttonSettings[buttonSettings.style]);
 
     const button = `
+
+    %%[ SET @test = "test" ]%%
     <!-- CTA -->
     <table border="0" cellpadding="0" cellspacing="0" style="max-width:600px;" width="100%">
     <tr>

@@ -58,7 +58,8 @@ export async function onRequest(context){;
                 authEndpoint : authUrl,
                 restEndpoint : restUrl,
                 webAppClientSecret : secretId,
-                webAppClientId : clientId
+                webAppClientId : clientId,
+                status : "OK"
             };
 
             // Return credentials as JSON response

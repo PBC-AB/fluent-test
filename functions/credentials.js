@@ -19,7 +19,7 @@ export async function onRequest(context){;
         urlDebug.originURL = originURL;
         urlDebug.refererURL = refererURL;
 
-        if( refererURL == validURL){
+        if(refererURL == validURL){
 
             const authUrl = context.env.AUTH_ENDPOINT_BUTTON;
             const restUrl = context.env.REST_ENDPOINT_BUTTON;

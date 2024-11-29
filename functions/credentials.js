@@ -1,12 +1,24 @@
-/*export async function onRequest(context){;
+export async function onRequest(context){;
 
     const { request } = context;
 
     const validURL = context.env.APP_URL_BUTTON; 
 
+    const urlDebug = {
+        validURL : validURL,
+        originURL : "",
+        refererURL : ""
+    };
+
     if(request.method === 'POST'){
         
+        // Get the origin URL from request headers
+        let originURL = request.headers.get('origin');
         let refererURL = request.headers.get('referer');
+
+        urlDebug.originURL = originURL;
+        urlDebug.refererURL = refererURL;
+
         if( refererURL == validURL){
 
             const authUrl = context.env.AUTH_ENDPOINT_BUTTON;
@@ -24,25 +36,35 @@
             return new Response(JSON.stringify(data), {headers: {'Content-Type' : 'text/plain'}});
         }
 
-        return new Response('Conflict:' + refererURL, {status: 409});
+        return new Response('Conflict:' + JSON.stringify(urlDebug), {status: 409});
     }
 
     return new Response('Method not allowed', {status: 405});
-}*/
+}
 
 // This function handles requests for retrieving credentials needed for authentication
-export async function onRequest(context){;
+/*export async function onRequest(context){;
 
     const { request } = context;
 
     // Normalize the valid URL by creating a URL object and getting its origin
     const validURL = new URL(context.env.APP_URL_BUTTON).origin;
 
+    const urlDebug = {
+        validURL : validURL,
+        originURL : "",
+        refererURL : ""
+    };
+
     // Only allow POST requests
     if(request.method === 'POST'){
         
         // Get the origin URL from request headers
         const originURL = request.headers.get('origin');
+        const refererURL = request.headers.get('referer');
+
+        urlDebug.originURL = originURL;
+        urlDebug.refererURL = refererURL;
         
         // Compare normalized URLs to validate request origin
         if(originURL === validURL){
@@ -67,9 +89,9 @@ export async function onRequest(context){;
         }
 
         // Return conflict error if origin URL doesn't match
-        return new Response('Conflict:' + originURL, {status: 409});
+        return new Response('URL Conflict: ' + JSON.stringify(urlDebug), {status: 409});
     }
 
     // Return method not allowed error for non-POST requests
     return new Response('Method not allowed', {status: 405});
-}
+}*/

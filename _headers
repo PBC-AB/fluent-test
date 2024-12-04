@@ -1,3 +1,6 @@
 /* 
   X-Frame-Options:
   Access-Control-Allow-Origin: *
+  Content-Encoding: br
+  Vary: Accept-Encoding
+  Cache-Control: public, max-age=3600

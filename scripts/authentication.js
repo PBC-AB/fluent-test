@@ -1,7 +1,7 @@
 let sdk = new window.sfdc.BlockSDK({
   tabs: [/*{
     key : "economist_ccb_button",
-    name : "Button (Custom)",
+    name : "Button",
     url : "LINK TO HEROKU"
   }*/]
   ,blockEditorWidth: 400
@@ -17,7 +17,7 @@ let restEndpoint;
 
 async function initialize(){
 
-  //console.log('Custom Content Block is being called by: ', window.location.href);
+  console.log('Custom Content Block is being called by: ', window.location.href);
   // Script should only run on base url / origin
   if (thisAppURL != window.location.href) return;
 
@@ -28,15 +28,15 @@ async function initialize(){
   }
   
   const credentials = await getCredentials();
-  //console.log('credentials', credentials);
+  console.log('credentials', credentials);
 
   ({ webAppClientId, webAppClientSecret, authEndpoint, restEndpoint } = credentials);
 
   const authCode = await getAuthCode();
-  //console.log('getAuthCode', getAuthCode);
+  console.log('getAuthCode', getAuthCode);
 
   const accountId = await getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint);
-  //console.log('accountid', accountId)
+  console.log('accountid', accountId)
 
   await load_ui(thisAppURL);
   

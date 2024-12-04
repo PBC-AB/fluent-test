@@ -1,0 +1,37 @@
+version: 2.1
+
+jobs:
+  sync-repos:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "${SSH_KEY_FINGERPRINT}"  # You'll add this in CircleCI settings
+      - run:
+          name: Setup Git
+          command: |
+            git config --global user.name "Paul Scott"
+            git config --global user.email "paulscott@economist.com"
+      - run:
+          name: Add Target Remote and Push
+          command: |
+            # Add GitHub's SSH key to known hosts
+            mkdir -p ~/.ssh
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+            
+            # Add target repository as remote and push
+            git remote add target git@github.com:EconomistDigitalSolutions/cce-sfmc-usability.git
+            git fetch target
+            git push target main:main
+
+workflows:
+  version: 2
+  sync-workflow:
+    jobs:
+      - sync-repos:
+          filters:
+            branches:
+              only:
+                - main

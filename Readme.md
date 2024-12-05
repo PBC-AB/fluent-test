@@ -6,7 +6,7 @@ Root
                      After auth,  switches loading app with "real" ui app
         submit-auth.js - utility script for authentication workflow. Using triggerAuth2 function, authenticates with the marketing cloud environment the app is running on
     scripts
-        authentication.js
+        alternativeauth.js
         blocksdk.js - Salesforce function from documentation:
                     https://github.com/salesforce-marketingcloud/blocksdk
         script.js - Client side javascript (business case specific - handles frontend)

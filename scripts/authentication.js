@@ -23,7 +23,7 @@ let sdk = new window.sfdc.BlockSDK({
       return;
     }
     
-    const credentials = await getCredentials();
+    /*const credentials = await getCredentials();
     console.log('credentials', credentials);
   
     ({ webAppClientId, webAppClientSecret, authEndpoint, restEndpoint } = credentials);
@@ -32,7 +32,7 @@ let sdk = new window.sfdc.BlockSDK({
     console.log('getAuthCode', getAuthCode);
   
     const accountId = await getAccountId(authCode, thisAppURL, webAppClientId, webAppClientSecret, authEndpoint, restEndpoint);
-    console.log('accountid', accountId)
+    console.log('accountid', accountId)*/
   
     await load_ui(thisAppURL);
     

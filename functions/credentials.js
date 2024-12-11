@@ -1,11 +1,5 @@
 export async function onRequest(context){
 
-    // Frame check
-    if (!/content-builder\..*\.marketingcloudapps.com/.test(document.location.ancestorOrigins[0])){
-        //displayUnauthorized("App is not running on valid environment.");
-        return new Response('File is not running on valid environment.', {status: 405});
-    }
-
     const { request } = context;
 
     const validURL = context.env.APP_URL_BUTTON; 

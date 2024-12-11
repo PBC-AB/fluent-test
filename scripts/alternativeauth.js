@@ -1,9 +1,5 @@
 let sdk = new window.sfdc.BlockSDK({
-  tabs: [/*{
-    key : "economist_ccb_button",
-    name : "Button",
-    url : "LINK TO HEROKU"
-  }*/]
+  tabs: []
   ,blockEditorWidth: 400
 });
 

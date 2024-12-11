@@ -1,4 +1,4 @@
-export async function onRequest(context){
+/*export async function onRequest(context){
 
     const { request } = context;
 
@@ -23,4 +23,4 @@ export async function onRequest(context){
     }
 
     return new Response('Method not allowed', {status: 405});
-}
+}*/
